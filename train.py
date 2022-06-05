@@ -60,7 +60,7 @@ if ctx.startswith('cpu'):
     ctx = mx.cpu()
 elif ctx.startswith('gpu'):
     print("int(ctx[ctx.index('-') + 1:]): %s" % int(ctx[ctx.index('-') + 1:]))
-    ctx = mx.gpu(int(ctx[ctx.index('-') + 1:]))
+    ctx = mx.gpu(0) # int(ctx[ctx.index('-') + 1:])    1
 
 # import model
 print('Model is %s' % (model_name))

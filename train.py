@@ -33,7 +33,7 @@ if os.path.exists('logs'):
 
 # read configuration
 config = configparser.ConfigParser()
-print('Read configuration file: %s' % (args.config))
+print('Read configuration file: %s' % (args.config)) # configurations/PEMS08.conf
 config.read(args.config)
 data_config = config['Data']
 training_config = config['Training']
@@ -59,6 +59,7 @@ merge = bool(int(training_config['merge']))
 if ctx.startswith('cpu'):
     ctx = mx.cpu()
 elif ctx.startswith('gpu'):
+    print("int(ctx[ctx.index('-') + 1:]): %s" % int(ctx[ctx.index('-') + 1:]))
     ctx = mx.gpu(int(ctx[ctx.index('-') + 1:]))
 
 # import model
@@ -116,14 +117,14 @@ if __name__ == "__main__":
 
     # training set data loader
     train_loader = gluon.data.DataLoader(
-                        gluon.data.ArrayDataset(
-                            nd.array(all_data['train']['week'], ctx=ctx),
-                            nd.array(all_data['train']['day'], ctx=ctx),
-                            nd.array(all_data['train']['recent'], ctx=ctx),
-                            nd.array(all_data['train']['target'], ctx=ctx)
-                        ),
-                        batch_size=batch_size,
-                        shuffle=True
+        gluon.data.ArrayDataset(
+            nd.array(all_data['train']['week'], ctx=ctx),
+            nd.array(all_data['train']['day'], ctx=ctx),
+            nd.array(all_data['train']['recent'], ctx=ctx),
+            nd.array(all_data['train']['target'], ctx=ctx)
+        ),
+        batch_size=batch_size,
+        shuffle=True
     )
 
     # validation set data loader
